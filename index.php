@@ -30,15 +30,15 @@
   <style type="text/css">
     body { background-color: #2C2C29; color: #2C2C29; font-family: Tahoma; font-size: 11px; margin: 0; padding: 0; }
 
-    #wrapper { width: 1024px; margin: 0 auto; }
-    #top { height:116px; margin: 0 0 0 5px; }
-    #content { background-color: #fff; padding: 1em 0 1em 1em; font-size: 1.2em; }
+    #wrapper { width: 811px; margin: 0 auto; }
+    #top span { display: none; }
+    #content { background-color: #fff; padding: 1em; font-size: 1.2em; }
 
     .caption {
       background-color: #F3F3F3;
       border: 1px solid #DDD;
-      padding: 3px;
-      margin: 0 0 20px 1px;
+      padding: 4px;
+      margin: 0 0 0 30px;
       width: 320px;
       display: inline-block;
     }
