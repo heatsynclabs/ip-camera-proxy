@@ -30,16 +30,15 @@
   <style type="text/css">
     body { background-color: #2C2C29; color: #2C2C29; font-family: Tahoma; font-size: 11px; margin: 0; padding: 0; }
 
-    #wrapper { width: 811px; margin: 0 auto; }
-    #top span { display: none; }
-    #content { background-color: #fff; padding: 1em; font-size: 1.2em; }
-    #chatbox { position: absolute; top: 0px; right: 0px; }
+    #wrapper { width: 1024px; margin: 0 auto; }
+    #top { height:116px; margin: 0 0 0 5px; }
+    #content { background-color: #fff; padding: 1em 0 1em 1em; font-size: 1.2em; }
 
     .caption {
       background-color: #F3F3F3;
       border: 1px solid #DDD;
-      padding: 4px;
-      margin: 0 0 0 30px;
+      padding: 3px;
+      margin: 0 0 20px 1px;
       width: 320px;
       display: inline-block;
     }
@@ -48,13 +47,16 @@
       clear: both;
     }
 
-    h2 {
+    h1,h2,h3,h4 {
       font-family: Helvetica, Georgia;
       font-size: 24px;
       letter-spacing: -1px;
-      margin: 10px 0px 3px;
+      margin: 0px 0px 10px;
       border-bottom: 1px solid #DCDCDB;
     }
+    h2 { font-size: 22px; }
+    h3 { font-size: 20px; }
+    h4 { font-size: 18px; }
   </style>
 </head>
 
