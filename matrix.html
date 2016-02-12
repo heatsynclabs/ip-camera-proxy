@@ -1,0 +1,67 @@
+<html>
+<head>
+  <style type="text/css">
+/*body {margin: 0; padding: 0; background-color: #000; overflow: hidden;        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; 
+              color: #ccc;        font-size: 10pt;    }    a { color: #ccc; }    .cam { float: left; width: auto; max-width: 33%; }    .cam img, .cam iframe {  
+              width:auto; max-width: 100%; border: 0; }     .cam a { display: block; }
+*/
+    body {margin: 0; padding: 0; background-color: #000; overflow: hidden;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color: #ccc;
+        font-size: 10pt;
+    }
+    a { color: #ccc; }
+    .cam { float: left; width: 33%; }
+    .cam img, .cam iframe {  width: 100%;  height: 26%; border: 0; } 
+    .cam a { display: block; }
+  </style>
+  <script language="javascript" >
+    var interval = 30000;  // milliseconds between refreshes
+
+    function pageLoad() {
+      setInterval ( "refresh()", interval );
+    }
+
+    function refresh() {
+      document.getElementById("cam1").src = "http://live.heatsynclabs.org/snapshot.php?camera=1&"+Math.round(Math.random()*1000000);
+      document.getElementById("cam2").src = "http://vps2.davr.org/amt/webcam.jpg?"+Math.round(Math.random()*1000000);
+      document.getElementById("cam3").src = "http://camera.sector67.org/camera.jpg?"+Math.round(Math.random()*1000000);
+      document.getElementById("cam4").src = "http://androidwebkey.com/quelab3/screenshot.jpg?hnnnwn1294253747846&"+Math.round(Math.random()*1000000);
+      document.getElementById("cam5").src = "http://shell.hive13.org/webcam1/fullsize.jpg?"+Math.round(Math.random()*1000000);
+    }
+  </script>
+</head>
+<body onLoad="pageLoad()">
+
+<p>
+The webcams refresh every 30 seconds. To get your hackerspace's camera here, add it to <a href="http://hackerspaces.org/wiki/Webcams">this list</a> and then notify <a href="http://twitter.com/willbradley">Will</a>. If you're using Safari and keep getting phishing messages, complain to Apple, Androidwebkey, or Quelab. Or just get a real browser ;)<br/>
+Also see the <a href="http://www.alphaonelabs.com/matrix.php">Alpha One Labs Ustream Matrix</a> -- this page is just for non-Ustream cams.
+</p>
+
+<div class="cam">
+<a class="camtitle" href="http://vps2.davr.org/amt/webcam.html">Ace Monster Toys (California USA)</a>
+<img id="cam2" src="http://vps2.davr.org/amt/webcam.jpg"></img>
+</div>
+
+<div class="cam">
+<a href="http://live.heatsynclabs.org">HeatSync Labs (Arizona USA)</a>
+<img id="cam1" src="http://live.heatsynclabs.org/snapshot.php?camera=1"></img>
+</div>
+
+<div class="cam">
+<a class="camtitle" href="http://hive13.org/webcam/">Hive13 (Ohio USA)</a>
+<img id="cam5" src="http://shell.hive13.org/webcam1/fullsize.jpg"></img>
+</div>
+
+<div class="cam">
+<a class="camtitle" href="http://camera:camera@androidwebkey.com/quelab3/screenshot.jpg?hnnnwn1294253747846">Quelab (New Mexico USA)</a>
+<img id="cam4" src="http://camera:camera@androidwebkey.com/quelab3/screenshot.jpg?hnnnwn1294253747846"></img>
+</div>
+
+<div class="cam">
+<a class="camtitle" href="http://camera.sector67.org/camera.jpg">Sector67 (Wisconsin USA)</a>
+<img id="cam3" src="http://camera.sector67.org/camera.jpg"></img>
+</div>
+
+
+</body>
+</html>

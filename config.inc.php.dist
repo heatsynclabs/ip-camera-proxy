@@ -1,0 +1,11 @@
+<?php
+
+$cam1user = "YOURUSERNAME";
+$cam2user = "YOURUSERNAME";
+$cam3user = "YOURUSERNAME";
+$cam4user = "YOURUSERNAME";
+
+$cam1pass = "YOURPASSWORD";
+$cam2pass = "YOURPASSWORD";
+$cam3pass = "YOURPASSWORD";
+$cam4pass = "YOURPASSWORD";
