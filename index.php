@@ -5,10 +5,20 @@
   <script type="text/javascript" src="jquery-2.2.0.min.js"></script>
   <script type="text/javascript">
     function refresh() {
-      document.getElementById("livestream1").src = "snapshot.php?camera=1&"+Math.round(Math.random()*1000000);
-      document.getElementById("livestream2").src = "snapshot.php?camera=2&"+Math.round(Math.random()*1000000);
-      document.getElementById("livestream3").src = "snapshot.php?camera=3&"+Math.round(Math.random()*1000000);
-      document.getElementById("livestream4").src = "snapshot.php?camera=4&"+Math.round(Math.random()*1000000);
+      cam1result = "snapshot.php?camera=1&"+Math.round(Math.random()*1000000);
+      cam2result = "snapshot.php?camera=2&"+Math.round(Math.random()*1000000);
+      cam3result = "snapshot.php?camera=3&"+Math.round(Math.random()*1000000);
+      cam4result = "snapshot.php?camera=4&"+Math.round(Math.random()*1000000);
+
+      if (strlen(cam1result) > 102400) { document.getElementById("livestream1").src = cam1result; }
+      if (strlen(cam2result) > 102400) { document.getElementById("livestream2").src = cam2result; }
+      if (strlen(cam3result) > 102400) { document.getElementById("livestream3").src = cam3result; }
+      if (strlen(cam4result) > 102400) { document.getElementById("livestream4").src = cam4result; }
+
+//      document.getElementById("livestream1").src = "snapshot.php?camera=1&"+Math.round(Math.random()*1000000);
+//      document.getElementById("livestream2").src = "snapshot.php?camera=2&"+Math.round(Math.random()*1000000);
+//      document.getElementById("livestream3").src = "snapshot.php?camera=3&"+Math.round(Math.random()*1000000);
+//      document.getElementById("livestream4").src = "snapshot.php?camera=4&"+Math.round(Math.random()*1000000);
     }
     function pageLoad() {
       setInterval( "refresh()", 10000 );
@@ -60,15 +70,15 @@
   </style>
 </head>
 
-<body onLoad="pageLoad()">
+<bod
 <div id="wrapper">
   <a href="http://www.heatsynclabs.org"><img src="hsl-logo.png" height="116" /></a>
 
   <div id="content">
     <h2>HeatSync Labs Live Webcams</h2>
     <p>See if there are people in the lab!<br/>The camera views refresh at least every 10 seconds, though you may not be able to tell if nothing's moving.<br/> 
-    If the cameras are broken, please tweet @willbradley or email will at heatsynclabs dot org.</p>
-    <p>Nobody here? Check the <a href="http://twitter.com/heatsyncstatus">HeatSyncStatus</a> feed. See when the next event is scheduled at the <a href="http://www.heatsynclabs.org">HeatSync Website</a>.</p>
+    If the cameras are broken, please tweet <a href="https://twitter.com/meznak">@meznak</a> or email nate at heatsynclabs dot org.</p>
+    <p>Nobody here? Check the <a href="https://twitter.com/heatsynclabs">@HeatSyncLabs</a> feed. See when the next event is scheduled at the <a href="http://www.heatsynclabs.org">HeatSync Website</a>.</p>
 
     <div class="caption">
       <img id="livestream1" src="snapshot.php?camera=1" width="320" height="240" />
@@ -84,6 +94,7 @@
 
     <div class="caption">
       <img id="livestream4" src="snapshot.php?camera=4" width="320" height="240" />
+      <!--<img src="images/no_camera.jpg" width="320" height="240" />-->
     </div>
 
     <h2>Who's Here?</h2>
