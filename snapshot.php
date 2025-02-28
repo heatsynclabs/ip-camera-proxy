@@ -2,172 +2,103 @@
 
 require("config.inc.php");
 
-if($_GET['camera'] == 1) 
-{
-	$rand = rand(1000,9999);
-	$url = 'http://172.22.110.11/snapshot.cgi?'.$rand;
-	
-	$curl_handle=curl_init();
-	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($curl_handle,CURLOPT_URL,$url); 
-	curl_setopt($curl_handle, CURLOPT_USERPWD, "$cam1user:$cam1pass");
-	$buffer = curl_exec($curl_handle);
-	curl_close($curl_handle);
-	
-	if (empty($buffer))
-	{
-	    print "";
-	}
-	elseif($buffer == "Can not get image.")
-	{
-	    print "Can not get image.";
-	}
-	else
-	{
-	    header("Content-Type: image/jpeg");
-	    print $buffer;
-	}
-}
-elseif($_GET['camera'] == 2) 
-{
-	$rand = rand(1000,9999);
-	$url = "http://172.22.110.12:88/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=$cam2user&pwd=$cam2pass";
-	
-	$curl_handle=curl_init();
-	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($curl_handle,CURLOPT_URL,$url); 
-#	curl_setopt($curl_handle, CURLOPT_USERPWD, "$cam2user:$cam2pass");
-	$buffer = curl_exec($curl_handle);
-	curl_close($curl_handle);
-	
-	if (empty($buffer))
-	{
-	    print "";
-	}
-	elseif($buffer == "Can not get image.")
-	{
-	    print "Can not get image.";
-	}
-	else
-	{
-	    header("Content-Type: image/jpeg");
-	    print $buffer;
-	}
-}
-elseif($_GET['camera'] == 3) 
-{
-	$rand = rand(1000,9999);
-	$url = 'http://172.22.110.13/snapshot.cgi?'.$rand;
-	
-	$curl_handle=curl_init();
-	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($curl_handle,CURLOPT_URL,$url); 
-	curl_setopt($curl_handle, CURLOPT_USERPWD, "$cam3user:$cam3pass");
-	$buffer = curl_exec($curl_handle);
-	curl_close($curl_handle);
-	
-	if (empty($buffer))
-	{
-	    print "";
-	}
-	elseif($buffer == "Can not get image.")
-	{
-	    print "Can not get image.";
-	}
-	else
-	{
-	    header("Content-Type: image/jpeg");
-	    print $buffer;
-	}
-}
-elseif($_GET['camera'] == 4) 
-{
-	$rand = rand(1000,9999);
-	$url = 'http://172.22.110.14/snapshot.cgi?'.$rand;
-	
-	$curl_handle=curl_init();
-	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($curl_handle,CURLOPT_URL,$url); 
-	curl_setopt($curl_handle, CURLOPT_USERPWD, "$cam4user:$cam4pass");
-	$buffer = curl_exec($curl_handle);
-	curl_close($curl_handle);
-	
-	if (empty($buffer))
-	{
-	    print "";
-	}
-	elseif($buffer == "Can not get image.")
-	{
-	    print "Can not get image.";
-	}
-	else
-	{
-	    header("Content-Type: image/jpeg");
-	    print $buffer;
-	}
-}
-elseif($_GET['camera'] == 9)
-{
-	# Used to separate multipart
-	$boundary = "IPCamBoundary";
-	
-	# We start with the standard headers. PHP allows us this much
-	header("Cache-Control: no-cache");
-	header("Cache-Control: private");
-	header("Pragma: no-cache");
-	header("Content-type: image/jpeg");
-	
-	# From here out, we no longer expect to be able to use the header() function
-	print "--$boundary\n";
-	
-	# Set this so PHP doesn't timeout during a long stream
-	set_time_limit(0);
-	
-	# Disable Apache and PHP's compression of output to the client
-	@apache_setenv('no-gzip', 1);
-	@ini_set('zlib.output_compression', 0);
-	
-	# Set implicit flush, and flush all current buffers
-	@ini_set('implicit_flush', 1);
-	for ($i = 0; $i < ob_get_level(); $i++)
-	    ob_end_flush();
-	ob_implicit_flush(1);
-	
-	# The loop, producing one jpeg frame per iteration
-//	while (true) {
-	   
-	
-	    # Your function to get one jpeg image
-		$rand = rand(1000,9999);
-		$url = 'http://intranet.heatsynclabs.org:9001/GetData.cgi?'.$rand;
-		
-		$curl_handle=curl_init();
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($curl_handle,CURLOPT_URL,$url); 
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
-		
-		if (!empty($buffer))
-		{
-			# Per-image header, note the two new-lines
-	  		print "Content-type: image/jpeg\n\n";
-			print $buffer;
-		}
-		else {
-			print "Content-type: text/html\n\n";
-			print "No image.";
-		}
-	
-	    # The separator
-	    print "--$boundary\n";
-//	}
+$camera = intval( $_GET['camera'] );
 
-
-	
-}
-else {
-	print "Error: No camera requested.";
+if (!isset($cameraInfo) || !is_array($cameraInfo) ) {
+    print "Error: No camera requested.";
+    exit;
 }
 
 
-?>
+/**
+ * @param $cameraInfo
+ * @return bool|string
+ * @throws Exception
+ */
+function getCameraImage($cameraInfo) {
+
+    if (!isset($cameraInfo)) {
+        throw new Exception("Camera not found");
+    }
+
+    $curl_handle=curl_init();
+    curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($curl_handle,CURLOPT_URL,$cameraInfo['url']);
+    curl_setopt($curl_handle, CURLOPT_USERPWD, $cameraInfo['user'] . ":" . $cameraInfo['pass']);
+
+    $buffer = curl_exec($curl_handle);
+    curl_close($curl_handle);
+    return $buffer;
+}
+
+function displayCameraError()
+{
+    if (file_exists(__DIR__ . '/images/no-photo-alt.png')) {
+        $buffer = fopen(__DIR__ . '/images/no-photo-alt.png', 'rb');
+        header("Content-Type: image/jpeg");
+        return fpassthru($buffer);
+    }
+    return false;
+}
+
+try {
+
+    /**
+     * Since each camera might have a different URL pattern, we need to handle each one differently
+     * Note: The "case" is the camera position in the grid layout:
+     * ┌───┬───┐
+     * │ 1 │ 2 │
+     * ├───┼───┤
+     * │ 3 │ 4 │
+     * └───┴───┘
+     */
+
+    switch ($camera) {
+        case 1:
+            if ($cameraInfo[1]['url']) {
+                $cameraInfo[1]['url'] = 'http://'. $cameraInfo[1]['user'] . ':' . $cameraInfo[1]['pass'] . '@' . $cameraInfo[1]['url'];
+            } else {
+                return displayCameraError();
+            }
+            break;
+        case 2:
+            $cameraInfo[2]['url'] = $cameraInfo[2]['url'] . $cameraInfo[2]['user'] . '&pwd=' . $cameraInfo[2]['pass'];
+            break;
+        case 3:
+            if ($cameraInfo[3]['url']) {
+                $cameraInfo[3]['url'] = $cameraInfo[3]['url'] . $cameraInfo[3]['user'] . '&pwd=' . $cameraInfo[3]['pass'];
+            } else {
+                return displayCameraError();
+            }
+            break;
+        case 5:
+            if ($cameraInfo[5]['url']) {
+                $cameraInfo[5]['url'] = 'http://'. $cameraInfo[5]['user'] . ':' . $cameraInfo[5]['pass'] . '@' . $cameraInfo[5]['url'];
+            } else {
+                return displayCameraError();
+            }
+
+            break;
+        // These cameras don't require any URL manipulation
+        case 4:
+            break;
+        default:
+            $buffer = null;
+            throw new Exception("Camera not found");
+    }
+
+    $buffer = getCameraImage( $cameraInfo[$camera] );
+
+    // Output the image, if there is one...
+    if (empty($buffer)) {
+        print "";
+    } elseif( $buffer == "Can not get image.") {
+        print "Can not get image.";
+    } else {
+        header("Content-Type: image/jpeg");
+        print $buffer;
+    }
+} catch (Exception $e) {
+    print "Error: " . $e->getMessage();
+    exit();
+}
