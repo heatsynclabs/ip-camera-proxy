@@ -1,11 +1,22 @@
 <?php
 
-$cam1user = "YOURUSERNAME";
-$cam2user = "YOURUSERNAME";
-$cam3user = "YOURUSERNAME";
-$cam4user = "YOURUSERNAME";
+$helper['rand'] = rand(1000, 9999);
+$helper['timestamp'] = time();
 
-$cam1pass = "YOURPASSWORD";
-$cam2pass = "YOURPASSWORD";
-$cam3pass = "YOURPASSWORD";
-$cam4pass = "YOURPASSWORD";
+/**
+ * The cameraInfo array is used to store the information for each camera.
+ * url : URL to the camera snapshot image.  This is different for each camera manufacturer.
+ * user: username to access the snapshot image
+ * password: self-explanatory
+ *
+ * Add an entry for each camera you want to display on the webcam page.
+ *
+ * Note: not all cameras need the timestamp helper.  It can be used as a cache buster.
+ */
+ $cameraInfo = array(
+    1 => array(
+         'url' => 'URL_TO_CAMERA_SNAPSHOT?timestamp=' . $helper['timestamp'],
+        'user' => 'USERNAME',
+        'pass' => 'PASSWORD'
+    ),
+);
